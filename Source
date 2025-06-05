@@ -1,0 +1,410 @@
+local lib={};local m=game.Players.LocalPlayer:GetMouse()
+
+-- Paradox UI Library
+
+--[[
+Im really thinking theres some normal UI Library creators that doesnt knows how to do section UI Libraries.
+Which is bad because wouldnt you get tired of doing the same logic over and over again but changing the design?
+
+I didnt know how to make an section UI Library too.
+But i used my bare brain to write an whole UI Library section type. lots of bugs, my retartedness and more.
+
+And i present you the Paradox UI Library!
+
+I wasnt about to publish this but this is probably the simpliest Section UI Library you've ever seen. All of other UI Library that has sections has too complicated logic.
+But i decided to publish it since you guys can learn how to do your own section UI Library with this open sourced UI Library.
+
+This UI Library is easy to use, easy to modify and most of all EASY TO LEARN.
+
+And while you doing your section UI Library, you probably wonder:
+"How do i even make the sections auto size for elements?"
+
+its so easy that you can learn it by 1 LOOK.
+
+Here is the code:
+script.Parent.Size = UDim2.new(
+script.Parent.Size.X.Scale, -- Your Section X Scale (Dont Touch)
+script.Parent.Size.X.Offset, -- Your Section X Offset (Dont Touch)
+0,  -- Your Section Y Scale (Dont Touch)
+script.Parent.UIListLayout.AbsoluteContentSize.Y + 5 -- Your Section Y Offset (+ 5 is optional for your padding, 5 recommended for me)
+)
+
+You only need an UIListLayout in your Section FRAME and thats it!
+You can change the padding if you want, you should not use 5 everytime. It can cause bad things to design look.
+
+i added some parameters on lib.new() function. Like draggable and keybind. Those are optional but if you want to add them you can add them.
+
+This UI Library only contains Button. I might add toggle, slider, textbox and dropdown if im bored (I dont want to add those right now).
+
+And dont question the UI Design since it was an test.
+
+Also, you can find an example usage of this UI Library on end of the code.
+
+Quick Note: Please dont use the same Gui2Lua as i used in mine. You can use it but i only used it for UIStrokes. Normal Gui2Lua doesnt supports UIStrokes.
+
+If you have an question, feel free to DM me on discord.
+My user is: gjxe
+
+Good luck with your UI Library.
+]]
+
+
+function lib.new(text, draggable, keybind)
+	lib["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"));
+	lib["1"]["Name"] = text;
+	lib["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
+
+
+	-- StarterGui.ParadoxUILib.Main
+	lib["2"] = Instance.new("Frame", lib["1"]);
+	lib["2"]["BorderSizePixel"] = 0;
+	lib["2"]["BackgroundColor3"] = Color3.fromRGB(16, 16, 16);
+	lib["2"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+	lib["2"]["Size"] = UDim2.new(0, 481, 0, 483);
+	lib["2"]["Position"] = UDim2.new(0.51319, 0, 0.5, 0);
+	lib["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+	lib["2"]["Name"] = [[Main]];
+	lib["2"]["Active"] = true
+	
+	if draggable then
+		lib["2"]["Selectable"] = true
+		lib["2"]["Draggable"] = true
+	end
+	
+	m.KeyDown:Connect(function(k)
+		if k == keybind then
+			lib["2"]["Visible"] = not lib["2"]["Visible"]
+		end
+	end)
+
+	-- StarterGui.ParadoxUILib.Main.UIStroke
+	lib["3"] = Instance.new("UIStroke", lib["2"]);
+	lib["3"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+	lib["3"]["Color"] = Color3.fromRGB(90, 255, 0);
+
+
+	-- StarterGui.ParadoxUILib.Main.ParadoxTitle
+	lib["4"] = Instance.new("TextLabel", lib["2"]);
+	lib["4"]["BorderSizePixel"] = 0;
+	lib["4"]["TextSize"] = 30;
+	lib["4"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+	lib["4"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+	lib["4"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+	lib["4"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+	lib["4"]["BackgroundTransparency"] = 1;
+	lib["4"]["Size"] = UDim2.new(0, 420, 0, 26);
+	lib["4"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+	lib["4"]["Text"] = [[Paradox]];
+	lib["4"]["Name"] = [[ParadoxTitle]];
+	lib["4"]["Position"] = UDim2.new(0.03341, 0, 0.02066, 0);
+
+
+	-- StarterGui.ParadoxUILib.Main.ScriptName
+	lib["5"] = Instance.new("TextLabel", lib["2"]);
+	lib["5"]["BorderSizePixel"] = 0;
+	lib["5"]["TextSize"] = 19;
+	lib["5"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+	lib["5"]["TextTransparency"] = 0.5;
+	lib["5"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+	lib["5"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+	lib["5"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+	lib["5"]["BackgroundTransparency"] = 1;
+	lib["5"]["Size"] = UDim2.new(0, 452, 0, 26);
+	lib["5"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+	lib["5"]["Text"] = text;
+	lib["5"]["Name"] = [[ScriptName]];
+	lib["5"]["Position"] = UDim2.new(0.03341, 0, 0.08898, 0);
+
+
+	-- StarterGui.ParadoxUILib.Main.Header0
+	lib["6"] = Instance.new("Frame", lib["2"]);
+	lib["6"]["BorderSizePixel"] = 0;
+	lib["6"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+	lib["6"]["Size"] = UDim2.new(0, 481, 0, 2);
+	lib["6"]["Position"] = UDim2.new(0, 0, 0.1677, 0);
+	lib["6"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+	lib["6"]["Name"] = [[Header0]];
+	lib["6"]["BackgroundTransparency"] = 0.8;
+
+
+	-- StarterGui.ParadoxUILib.Main.Header1
+	lib["7"] = Instance.new("Frame", lib["2"]);
+	lib["7"]["BorderSizePixel"] = 0;
+	lib["7"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+	lib["7"]["Size"] = UDim2.new(0, 481, 0, 2);
+	lib["7"]["Position"] = UDim2.new(0, 0, 0.26501, 0);
+	lib["7"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+	lib["7"]["Name"] = [[Header1]];
+	lib["7"]["BackgroundTransparency"] = 0.8;
+
+
+	-- StarterGui.ParadoxUILib.Main.TabButtons
+	lib["8"] = Instance.new("ScrollingFrame", lib["2"]);
+	lib["8"]["Active"] = true;
+	lib["8"]["BorderSizePixel"] = 0;
+	lib["8"]["CanvasSize"] = UDim2.new(0, 0, 0, 0);
+	lib["8"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+	lib["8"]["Name"] = [[TabButtons]];
+	lib["8"]["AutomaticCanvasSize"] = Enum.AutomaticSize.X;
+	lib["8"]["Size"] = UDim2.new(0, 481, 0, 45);
+	lib["8"]["ScrollBarImageColor3"] = Color3.fromRGB(0, 0, 0);
+	lib["8"]["Position"] = UDim2.new(0, 0, 0.17184, 0);
+	lib["8"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+	lib["8"]["ScrollBarThickness"] = 0;
+	lib["8"]["BackgroundTransparency"] = 1;
+
+
+	-- StarterGui.ParadoxUILib.Main.TabButtons.UIListLayout
+	lib["9"] = Instance.new("UIListLayout", lib["8"]);
+	lib["9"]["Padding"] = UDim.new(0, 10);
+	lib["9"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
+	lib["9"]["FillDirection"] = Enum.FillDirection.Horizontal;
+	
+	-- StarterGui.ParadoxUILib.Main.TabButtons.UIPadding
+	lib["c"] = Instance.new("UIPadding", lib["8"]);
+	lib["c"]["PaddingTop"] = UDim.new(0, 8);
+	lib["c"]["PaddingLeft"] = UDim.new(0, 10);
+	
+	-- StarterGui.ParadoxUILib.Main.TabHolder
+	lib["d"] = Instance.new("Frame", lib["2"]);
+	lib["d"]["BorderSizePixel"] = 0;
+	lib["d"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+	lib["d"]["Size"] = UDim2.new(0, 481, 0, 352);
+	lib["d"]["Position"] = UDim2.new(0, 0, 0.26915, 0);
+	lib["d"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+	lib["d"]["Name"] = [[TabHolder]];
+	lib["d"]["BackgroundTransparency"] = 1;
+	
+	-- StarterGui.ParadoxUILib.Main.TabHolder.Containers
+	local con = Instance.new("Folder", lib["d"]);
+	con["Name"] = [[Containers]];
+	
+	
+	local tabs={}
+	
+	function tabs.NewTab(name)
+		-- StarterGui.ParadoxUILib.Main.TabButtons.TabButton
+		local libA = Instance.new("TextButton", lib["8"]);
+		libA["BorderSizePixel"] = 0;
+		libA["TextColor3"] = Color3.fromRGB(255, 255, 255);
+		libA["TextSize"] = 14;
+		libA["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
+		libA["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+		libA["Size"] = UDim2.new(0, 159, 0, 37);
+		libA["Name"] = [[TabButton]];
+		libA["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+		libA["Text"] = name;
+
+
+		-- StarterGui.ParadoxUILib.Main.TabButtons.TabButton.Indicator
+		local libB = Instance.new("Frame", libA);
+		libB["BorderSizePixel"] = 0;
+		libB["BackgroundColor3"] = Color3.fromRGB(4, 123, 22);
+		libB["Size"] = UDim2.new(0, 159, 0, 7);
+		libB["Position"] = UDim2.new(0, 0, -0.18919, 0);
+		libB["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+		libB["Name"] = [[Indicator]];
+		libB["Visible"] = false;
+
+
+
+
+		-- StarterGui.ParadoxUILib.Main.TabHolder.Container2
+		local libE = Instance.new("Frame", con);
+		libE["BorderSizePixel"] = 0;
+		libE["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+		libE["Size"] = UDim2.new(0, 481, 0, 352);
+		libE["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+		libE["Name"] = name;
+		libE["BackgroundTransparency"] = 1;
+		libE["Visible"] = false
+
+
+		-- StarterGui.ParadoxUILib.Main.TabHolder.Container2.scroll
+		local libF = Instance.new("ScrollingFrame", libE);
+		libF["Active"] = true;
+		libF["BorderSizePixel"] = 0;
+		libF["CanvasSize"] = UDim2.new(0, 0, 0, 0);
+		libF["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+		libF["Name"] = [[scroll]];
+		libF["AutomaticCanvasSize"] = Enum.AutomaticSize.Y;
+		libF["Size"] = UDim2.new(0, 481, 0, 353);
+		libF["ScrollBarImageColor3"] = Color3.fromRGB(0, 0, 0);
+		libF["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+		libF["BackgroundTransparency"] = 1;
+
+
+		-- StarterGui.ParadoxUILib.Main.TabHolder.Container2.scroll.UIListLayout
+		lib["10"] = Instance.new("UIListLayout", libF);
+		lib["10"]["Wraps"] = true;
+		lib["10"]["Padding"] = UDim.new(0, 50);
+		lib["10"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
+		lib["10"]["FillDirection"] = Enum.FillDirection.Horizontal;
+
+
+		-- StarterGui.ParadoxUILib.Main.TabHolder.Container2.scroll.UIPadding
+		lib["11"] = Instance.new("UIPadding", libF);
+		lib["11"]["PaddingTop"] = UDim.new(0, 10);
+		lib["11"]["PaddingLeft"] = UDim.new(0, 20);
+		
+		libA.MouseButton1Click:Connect(function()
+			for _, v in pairs(con:GetChildren()) do
+				v.Visible = false
+			end
+			
+			for _, v in pairs(lib["8"]:GetChildren()) do
+				if v:IsA("TextButton") then
+					v.Indicator.Visible = false
+					end
+			end
+			libE.Visible = true
+			libB.Visible = true
+		end)
+		
+		
+		-- open the first tab
+		if #con:GetChildren() == 1 then
+			libE.Visible = true
+			libB.Visible = true
+		end
+		
+		local section={}
+		
+		function section.NewSection(name)
+			-- StarterGui.ParadoxUILib.Main.TabHolder.Container2.scroll.SectionNaN
+			local lib12 = Instance.new("Frame", libF);
+			lib12["BorderSizePixel"] = 0;
+			lib12["BackgroundColor3"] = Color3.fromRGB(45, 45, 45);
+			lib12["Size"] = UDim2.new(0, 194, 0, 24);
+			lib12["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+			lib12["Name"] = name;
+
+
+			-- StarterGui.ParadoxUILib.Main.TabHolder.Container2.scroll.SectionNaN.UIStroke
+			lib["13"] = Instance.new("UIStroke", lib12);
+			lib["13"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+			lib["13"]["Color"] = Color3.fromRGB(86, 86, 86);
+
+
+			-- StarterGui.ParadoxUILib.Main.TabHolder.Container2.scroll.SectionNaN.LocalScript
+			lib["14"] = Instance.new("LocalScript", lib12);
+
+
+
+			-- StarterGui.ParadoxUILib.Main.TabHolder.Container2.scroll.SectionNaN.UIListLayout
+			lib["15"] = Instance.new("UIListLayout", lib12);
+			lib["15"]["Padding"] = UDim.new(0, 10);
+			lib["15"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
+
+
+			-- StarterGui.ParadoxUILib.Main.TabHolder.Container2.scroll.SectionNaN.sectiontitle
+			lib["16"] = Instance.new("TextLabel", lib12);
+			lib["16"]["BorderSizePixel"] = 0;
+			lib["16"]["TextSize"] = 14;
+			lib["16"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+			lib["16"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+			lib["16"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+			lib["16"]["BackgroundTransparency"] = 1;
+			lib["16"]["Size"] = UDim2.new(0, 177, 0, 24);
+			lib["16"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+			lib["16"]["Text"] = name;
+			lib["16"]["Name"] = [[sectiontitle]];
+
+
+			-- StarterGui.ParadoxUILib.Main.TabHolder.Container2.scroll.SectionNaN.UIPadding
+			lib["17"] = Instance.new("UIPadding", lib12);
+			lib["17"]["PaddingLeft"] = UDim.new(0, 7);
+
+
+
+			-- StarterGui.ParadoxUILib.Main.TabHolder.Container2.scroll.SectionNaN.LocalScript
+			local function C_14()
+				local script = lib["14"];
+				task.wait()
+
+				script.Parent.Size = UDim2.new(script.Parent.Size.X.Scale, script.Parent.Size.X.Offset, 0, script.Parent.UIListLayout.AbsoluteContentSize.Y + 5)
+			end;
+			task.spawn(C_14);
+			
+			local elements = {}
+
+			function elements.NewButton(text, callback)
+				local Button = Instance.new("TextButton")
+
+				Button.Name = text
+				Button.Parent = lib12
+				Button.BackgroundColor3 = Color3.fromRGB(61, 61, 61)
+				Button.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Button.BorderSizePixel = 0
+				Button.Position = UDim2.new(0, 0, 1.41666663, 0)
+				Button.Size = UDim2.new(0, 182, 0, 27)
+				Button.Font = Enum.Font.Code
+				Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Button.TextSize = 14.000
+				Button.Text = text
+
+				Button.MouseButton1Click:Connect(function()
+					callback()
+				end)
+
+				
+			end
+			return elements
+		end
+		
+		return section
+	end
+	
+	return tabs
+	
+	
+end
+
+
+--[[
+Example Usage:
+
+local Paradox = lib.new("Paradox Script | V0.1", true, "e")
+
+local tab1 = Paradox.NewTab("Player")
+local tab2 = Paradox.NewTab("Envoriement")
+
+local tab1SEC = tab1.NewSection("Player")
+local tab1SEC2 = tab1.NewSection("Other")
+
+tab1SEC.NewButton("Speed to 100", function()
+	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
+end)
+
+tab1SEC.NewButton("JumpPower to 100", function()
+	game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
+end)
+
+tab1SEC.NewButton("Speed to 16 (Normal)", function()
+	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+end)
+
+tab1SEC.NewButton("JumpPower to 50", function()
+	game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+end)
+
+tab1SEC2.NewButton("Delete Humanoid", function()
+	game.Players.LocalPlayer.Character.Humanoid:Destroy()
+end)
+
+
+local tab2SEC = tab2.NewSection("World")
+local tab2SEC2 = tab2.NewSection("World Over Powered")
+
+tab2SEC.NewButton("Gravity to 1", function()
+	workspace.Gravity = 1
+end)
+
+tab2SEC2.NewButton("Anchor All", function()
+	for i,v in pairs(game.Players:GetPlayers()) do
+		workspace[v.Name].HumanoidRootPart.Anchored = true
+	end
+end)
+]]
+
+return lib
