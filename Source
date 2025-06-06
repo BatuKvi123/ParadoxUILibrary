@@ -1,6 +1,12 @@
-local lib={};local m=game.Players.LocalPlayer:GetMouse()
+local lib={};local m=game.Players.LocalPlayer:GetMouse();local uis=game:GetService("UserInputService")
 
--- Paradox UI Library
+--[[
+ ▄▄▄· ▄▄▄· ▄▄▄   ▄▄▄· ·▄▄▄▄        ▐▄• ▄ 
+▐█ ▄█▐█ ▀█ ▀▄ █·▐█ ▀█ ██▪ ██ ▪      █▌█▌▪
+ ██▀·▄█▀▀█ ▐▀▀▄ ▄█▀▀█ ▐█· ▐█▌ ▄█▀▄  ·██· 
+▐█▪·•▐█ ▪▐▌▐█•█▌▐█ ▪▐▌██. ██ ▐█▌.▐▌▪▐█·█▌
+.▀    ▀  ▀ .▀  ▀ ▀  ▀ ▀▀▀▀▀•  ▀█▄▀▪•▀▀ ▀▀                                                                                          
+]]
 
 --[[
 Im really thinking theres some normal UI Library creators that doesnt knows how to do section UI Libraries.
@@ -34,8 +40,6 @@ You can change the padding if you want, you should not use 5 everytime. It can c
 
 i added some parameters on lib.new() function. Like draggable and keybind. Those are optional but if you want to add them you can add them.
 
-This UI Library only contains Button. I might add toggle, slider, textbox and dropdown if im bored (I dont want to add those right now).
-
 And dont question the UI Design since it was an test.
 
 Also, you can find an example usage of this UI Library on end of the code.
@@ -46,8 +50,14 @@ If you have an question, feel free to DM me on discord.
 My user is: gjxe
 
 Good luck with your UI Library.
-]]
+---------------------------------
+UPDATES:
 
+0: None
+
+1: Added Toggle, Textbox, Slider, Dropdown (spent fucking minutes to fix the auto sizing on dropdown and its still bad but you can deal with it)
+
+]]
 
 function lib.new(text, draggable, keybind)
 	lib["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"));
@@ -240,7 +250,8 @@ function lib.new(text, draggable, keybind)
 		lib["10"]["Padding"] = UDim.new(0, 50);
 		lib["10"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
 		lib["10"]["FillDirection"] = Enum.FillDirection.Horizontal;
-
+		
+		 -- libF.CanvasSize = UDim2.new(libF.CanvasSize.X.Scale, libF.Size.X.Offset, 0, libF.Size.Y.Offset + lib["10"].AbsoluteContentSize.Y + 40)
 
 		-- StarterGui.ParadoxUILib.Main.TabHolder.Container2.scroll.UIPadding
 		lib["11"] = Instance.new("UIPadding", libF);
@@ -347,8 +358,353 @@ function lib.new(text, draggable, keybind)
 					callback()
 				end)
 
-				
+
 			end
+			
+			function elements.NewToggle(text, callback)
+				local Toggle = Instance.new("TextButton")
+				
+				local tState = false
+				
+				Toggle.Name = text
+				Toggle.Parent = lib12
+				Toggle.BackgroundColor3 = Color3.fromRGB(113, 0, 0)
+				Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Toggle.BorderSizePixel = 0
+				Toggle.Position = UDim2.new(0, 0, 1.41666663, 0)
+				Toggle.Size = UDim2.new(0, 182, 0, 27)
+				Toggle.Font = Enum.Font.Code
+				Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Toggle.TextSize = 14.000
+				Toggle.Text = "[OFF] "..text
+
+				Toggle.MouseButton1Click:Connect(function()
+					tState = not tState
+					callback(tState)
+					if tState then
+						Toggle.BackgroundColor3 = Color3.fromRGB(28, 185, 0)
+						Toggle.Text = "[ON] "..text
+					else
+						Toggle.BackgroundColor3 = Color3.fromRGB(113, 0, 0)
+						Toggle.Text = "[OFF] "..text
+					end
+				end)
+
+
+			end
+			
+			function elements.NewTextbox(text, callback)
+
+				local Textbox = Instance.new("Frame")
+				local textboxname = Instance.new("TextLabel")
+				local input = Instance.new("TextBox")
+
+				Textbox.Name = text
+				Textbox.Parent = lib12
+				Textbox.BackgroundColor3 = Color3.fromRGB(61, 61, 61)
+				Textbox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Textbox.BorderSizePixel = 0
+				Textbox.Position = UDim2.new(0, 0, 4.5, 0)
+				Textbox.Size = UDim2.new(0, 183, 0, 54)
+
+				textboxname.Name = text
+				textboxname.Parent = Textbox
+				textboxname.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				textboxname.BackgroundTransparency = 1.000
+				textboxname.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				textboxname.BorderSizePixel = 0
+				textboxname.Position = UDim2.new(0, 0, 0.111111112, 0)
+				textboxname.Size = UDim2.new(0, 184, 0, 12)
+				textboxname.Font = Enum.Font.Code
+				textboxname.TextColor3 = Color3.fromRGB(255, 255, 255)
+				textboxname.TextSize = 14.000
+				textboxname.Text = text
+
+				input.Name = "input"
+				input.Parent = Textbox
+				input.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+				input.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				input.BorderSizePixel = 0
+				input.Position = UDim2.new(0.0710382536, 0, 0.5, 0)
+				input.Size = UDim2.new(0, 158, 0, 18)
+				input.Font = Enum.Font.Code
+				input.Text = ""
+				input.TextColor3 = Color3.fromRGB(255, 255, 255)
+				input.TextSize = 14.000
+				
+				input.FocusLost:Connect(function()
+					callback(input.Text)
+				end)
+			end
+			
+			
+			function elements.NewSlider(text, min, max, callback)
+				local Value = 0
+				
+				local Slider = Instance.new("Frame")
+				local slidername = Instance.new("TextLabel")
+				local SliderBG = Instance.new("Frame")
+				local SliderButton = Instance.new("TextButton")
+				local SliderInner = Instance.new("Frame")
+				local CurrentValue = Instance.new("TextLabel")
+				local MaxValue = Instance.new("TextLabel")
+
+				Slider.Name = "Slider"
+				Slider.Parent = lib12
+				Slider.BackgroundColor3 = Color3.fromRGB(61, 61, 61)
+				Slider.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Slider.BorderSizePixel = 0
+				Slider.Position = UDim2.new(0, 0, 7.16666651, 0)
+				Slider.Size = UDim2.new(0, 183, 0, 90)
+
+				slidername.Name = "slidername"
+				slidername.Parent = Slider
+				slidername.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				slidername.BackgroundTransparency = 1.000
+				slidername.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				slidername.BorderSizePixel = 0
+				slidername.Position = UDim2.new(0, 0, 0.111111112, 0)
+				slidername.Size = UDim2.new(0, 184, 0, 12)
+				slidername.Font = Enum.Font.Code
+				slidername.TextColor3 = Color3.fromRGB(255, 255, 255)
+				slidername.TextSize = 14.000
+
+				SliderBG.Name = "SliderBG"
+				SliderBG.Parent = Slider
+				SliderBG.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+				SliderBG.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				SliderBG.BorderSizePixel = 0
+				SliderBG.Position = UDim2.new(0.0710382536, 0, 0.329629511, 0)
+				SliderBG.Size = UDim2.new(0, 158, 0, 20)
+
+				SliderButton.Name = "SliderButton"
+				SliderButton.Parent = SliderBG
+				SliderButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				SliderButton.BackgroundTransparency = 1.000
+				SliderButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				SliderButton.BorderSizePixel = 0
+				SliderButton.Size = UDim2.new(0, 158, 0, 18)
+				SliderButton.Font = Enum.Font.SourceSans
+				SliderButton.Text = " "
+				SliderButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+				SliderButton.TextSize = 14.000
+
+				SliderInner.Name = "SliderInner"
+				SliderInner.Parent = SliderButton
+				SliderInner.BackgroundColor3 = Color3.fromRGB(13, 13, 13)
+				SliderInner.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				SliderInner.BorderSizePixel = 0
+				SliderInner.Size = UDim2.new(0, 0, 0, 18)
+
+				CurrentValue.Name = "CurrentValue"
+				CurrentValue.Parent = Slider
+				CurrentValue.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				CurrentValue.BackgroundTransparency = 1.000
+				CurrentValue.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				CurrentValue.BorderSizePixel = 0
+				CurrentValue.Position = UDim2.new(0, 0, 0.677777767, 0)
+				CurrentValue.Size = UDim2.new(0, 40, 0, 12)
+				CurrentValue.Font = Enum.Font.Code
+				CurrentValue.Text = "0"
+				CurrentValue.TextColor3 = Color3.fromRGB(255, 255, 255)
+				CurrentValue.TextSize = 14.000
+
+				MaxValue.Name = "MaxValue"
+				MaxValue.Parent = Slider
+				MaxValue.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				MaxValue.BackgroundTransparency = 1.000
+				MaxValue.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				MaxValue.BorderSizePixel = 0
+				MaxValue.Position = UDim2.new(0.743169427, 0, 0.677777767, 0)
+				MaxValue.Size = UDim2.new(0, 47, 0, 12)
+				MaxValue.Font = Enum.Font.Code
+				MaxValue.Text = tonumber(max)
+				MaxValue.TextColor3 = Color3.fromRGB(255, 255, 255)
+				MaxValue.TextSize = 14.000
+				
+				local TweenService = game:GetService("TweenService")
+
+SliderButton.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		local function updateSlider(positionX)
+			local relativeX = math.clamp(positionX - SliderInner.AbsolutePosition.X, 0, 158)
+			local percent = relativeX / 158
+			Value = math.floor((tonumber(max) - tonumber(min)) * percent + tonumber(min))
+			CurrentValue.Text = tostring(Value)
+			pcall(function()
+				callback(Value)
+			end)
+
+			local tween = TweenService:Create(
+				SliderInner,
+				TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+				{ Size = UDim2.new(0, relativeX, 0, 20) }
+			)
+			tween:Play()
+		end
+
+		updateSlider(input.Position.X)
+
+		moveconnection = uis.InputChanged:Connect(function(moveInput)
+			if moveInput.UserInputType == Enum.UserInputType.MouseMovement or moveInput.UserInputType == Enum.UserInputType.Touch then
+				updateSlider(moveInput.Position.X)
+			end
+		end)
+
+		releaseconnection = uis.InputEnded:Connect(function(endInput)
+			if endInput.UserInputType == Enum.UserInputType.MouseButton1 or endInput.UserInputType == Enum.UserInputType.Touch then
+				updateSlider(endInput.Position.X)
+				if moveconnection then moveconnection:Disconnect() end
+				if releaseconnection then releaseconnection:Disconnect() end
+			end
+		end)
+	end
+end)		
+			end
+			
+			
+			function elements.NewDropdown(name, Options, callback)
+				local _ = false
+				
+				
+				local Dropdown = Instance.new("Frame")
+				local dropdownname = Instance.new("TextLabel")
+				local DropdownBG = Instance.new("Frame")
+				local selectedname = Instance.new("TextLabel")
+				local dropdownclick = Instance.new("TextButton")
+				local DropdownList = Instance.new("Frame")
+				local UIListLayout = Instance.new("UIListLayout")
+				local UIPadding = Instance.new("UIPadding")
+
+				Dropdown.Name = name
+				Dropdown.Parent = lib12
+				Dropdown.BackgroundColor3 = Color3.fromRGB(61, 61, 61)
+				Dropdown.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Dropdown.BorderSizePixel = 0
+				Dropdown.Position = UDim2.new(0, 0, 11.333333, 0)
+				Dropdown.Size = UDim2.new(0, 183, 0, 59)
+
+				dropdownname.Name = "dropdownname"
+				dropdownname.Parent = Dropdown
+				dropdownname.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				dropdownname.BackgroundTransparency = 1.000
+				dropdownname.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				dropdownname.BorderSizePixel = 0
+				dropdownname.Position = UDim2.new(0, 0, 0.111111112, 0)
+				dropdownname.Size = UDim2.new(0, 184, 0, 12)
+				dropdownname.Font = Enum.Font.Code
+				dropdownname.TextColor3 = Color3.fromRGB(255, 255, 255)
+				dropdownname.TextSize = 14.000
+				dropdownname.Text = name
+
+				DropdownBG.Name = "DropdownBG"
+				DropdownBG.Parent = Dropdown
+				DropdownBG.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+				DropdownBG.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				DropdownBG.BorderSizePixel = 0
+				DropdownBG.Position = UDim2.new(0.0710382536, 0, 0.533019006, 0)
+				DropdownBG.Size = UDim2.new(0, 158, 0, 20)
+
+				selectedname.Name = "selectedname"
+				selectedname.Parent = DropdownBG
+				selectedname.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				selectedname.BackgroundTransparency = 1.000
+				selectedname.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				selectedname.BorderSizePixel = 0
+				selectedname.Size = UDim2.new(0, 158, 0, 20)
+				selectedname.Font = Enum.Font.Code
+				selectedname.Text = "Selected: NaN"
+				selectedname.TextColor3 = Color3.fromRGB(255, 255, 255)
+				selectedname.TextSize = 14.000
+
+				dropdownclick.Name = "dropdownclick"
+				dropdownclick.Parent = DropdownBG
+				dropdownclick.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				dropdownclick.BackgroundTransparency = 1.000
+				dropdownclick.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				dropdownclick.BorderSizePixel = 0
+				dropdownclick.Size = UDim2.new(0, 158, 0, 20)
+				dropdownclick.Font = Enum.Font.SourceSans
+				dropdownclick.Text = ""
+				dropdownclick.TextColor3 = Color3.fromRGB(0, 0, 0)
+				dropdownclick.TextSize = 14.000
+
+				DropdownList.Name = "DropdownList"
+				DropdownList.Parent = Dropdown
+				DropdownList.BackgroundColor3 = Color3.fromRGB(108, 108, 108)
+				DropdownList.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				DropdownList.BorderSizePixel = 0
+				DropdownList.Position = UDim2.new(0.0710382536, 0, 1, 0)
+				DropdownList.Size = UDim2.new(0, 158, 0, 27)
+				DropdownList.Visible = false
+				
+				UIListLayout.Parent = DropdownList
+				UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+				UIPadding.Parent = DropdownList
+				UIPadding.PaddingTop = UDim.new(0, 4)
+
+				local function LCHRZ_fake_script()
+					local script = Instance.new('LocalScript', DropdownList)
+					task.wait()
+					script.Parent.Size = UDim2.new(script.Parent.Size.X.Scale, script.Parent.Size.X.Offset, 0, script.Parent.UIListLayout.AbsoluteContentSize.Y)
+					print(script.Parent.Size)
+				end
+				coroutine.wrap(LCHRZ_fake_script)()
+				
+				
+					for i,v in pairs(DropdownList:GetChildren()) do
+						if v:IsA("TextButton") then
+							v:Destroy()
+						end
+					end
+					
+					for _, Opt in ipairs(Options) do
+					
+					local SelectionButton = Instance.new("TextButton")
+					
+					SelectionButton.Name = Opt
+					SelectionButton.Parent = DropdownList
+					SelectionButton.BackgroundColor3 = Color3.fromRGB(143, 143, 143)
+					SelectionButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+					SelectionButton.BorderSizePixel = 0
+					SelectionButton.Position = UDim2.new(0, 0, -0.352941185, 0)
+					SelectionButton.Size = UDim2.new(0, 158, 0, 19)
+					SelectionButton.Font = Enum.Font.Code
+					SelectionButton.Text = Opt
+					SelectionButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+					SelectionButton.TextSize = 14.000
+					
+					SelectionButton.MouseButton1Click:Connect(function()
+							callback(Opt)
+							selectedname.Text = "Selected: "..Opt
+							
+							for i,v in pairs(DropdownList:GetChildren()) do
+								if v:IsA("TextButton") then
+									v.BackgroundColor3 = Color3.fromRGB(143, 143, 143)
+								end
+							end
+							
+							SelectionButton.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+							
+						end)
+						end
+				
+				dropdownclick.MouseButton1Click:Connect(function()
+					--DropdownList.Visible = not DropdownList.Visible
+					_ = not _
+					
+					if _ then
+						lib12.Size = lib12.Size + UDim2.fromOffset(0, DropdownList.Size.Y.Offset + 5)
+						DropdownList.Visible = true
+					else
+						lib12.Size = lib12.Size - UDim2.fromOffset(0, DropdownList.Size.Y.Offset + 5)
+																		-- DropdownList.Size.Y.Offset
+						DropdownList.Visible = false
+					end
+				end)
+			end
+			
 			return elements
 		end
 		
@@ -361,16 +717,15 @@ function lib.new(text, draggable, keybind)
 end
 
 
---[[
-Example Usage:
-
 local Paradox = lib.new("Paradox Script | V0.1", true, "e")
 
 local tab1 = Paradox.NewTab("Player")
 local tab2 = Paradox.NewTab("Envoriement")
+local tab3 = Paradox.NewTab("Dropdown")
 
 local tab1SEC = tab1.NewSection("Player")
 local tab1SEC2 = tab1.NewSection("Other")
+local tab3SEC = tab3.NewSection("Dropdowns")
 
 tab1SEC.NewButton("Speed to 100", function()
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
@@ -405,6 +760,35 @@ tab2SEC2.NewButton("Anchor All", function()
 		workspace[v.Name].HumanoidRootPart.Anchored = true
 	end
 end)
-]]
+
+tab2SEC2.NewButton("Unanchor All", function()
+	for i,v in pairs(game.Players:GetPlayers()) do
+		workspace[v.Name].HumanoidRootPart.Anchored = false
+	end
+end)
+
+tab2SEC2.NewToggle("Anchor State", function(state)
+	if state then
+		for i,v in pairs(game.Players:GetPlayers()) do
+			workspace[v.Name].HumanoidRootPart.Anchored = true
+		end
+	else
+		for i,v in pairs(game.Players:GetPlayers()) do
+			workspace[v.Name].HumanoidRootPart.Anchored = false
+		end
+	end
+end)
+
+tab2SEC2.NewTextbox("text box lol", function(txt)
+	print(txt)
+end)
+
+tab2SEC2.NewSlider("print some numbers", 10, 500, function(num)
+	print(num)
+end)
+
+tab2SEC2.NewDropdown("wow", {"ok", "not ok", "yoo", "whaaaa", "what the", "yes bro"}, function(call)
+	print(call)
+end)
 
 return lib
