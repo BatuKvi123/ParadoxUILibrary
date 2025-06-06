@@ -716,7 +716,8 @@ end)
 	
 end
 
-
+--[[
+Example Usage:
 local Paradox = lib.new("Paradox Script | V0.1", true, "e")
 
 local tab1 = Paradox.NewTab("Player")
@@ -790,5 +791,5 @@ end)
 tab2SEC2.NewDropdown("wow", {"ok", "not ok", "yoo", "whaaaa", "what the", "yes bro"}, function(call)
 	print(call)
 end)
-
+]]
 return lib
