@@ -723,7 +723,8 @@ end)
 	
 	
 end
-
+--[[
+Example Usage:
 local l = lib.new("Paradox Scripts", true, "p")
 
 local PlayerTab = l.NewTab("Player")
@@ -743,5 +744,5 @@ end)
 PlayerTab_PlayerSection.NewSlider("0 to 1000 speed", 0, 1000, function(val)
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = val
 end)
-
+]]
 return lib
