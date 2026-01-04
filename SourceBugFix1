@@ -68,6 +68,7 @@ function lib.new(text, draggable, keybind)
 	lib["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"));
 	lib["1"]["Name"] = text;
 	lib["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
+	lib["1"]["ResetOnSpawn"] = false;
 
 
 	-- StarterGui.ParadoxUILib.Main
